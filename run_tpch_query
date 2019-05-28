@@ -1,8 +1,12 @@
 #!/bin/bash 
 # 
 # Run TPC-H query on different scaling-factor (SF) schemas 
-# Default DB is SNOWFLAKE_SAMPLE_DATA database. 
-# Default schema is tpch_sf1000 = 1GB. 
+# Default DB is SAMPLE_DATA share provided by Snowflake. 
+# Default schema is TPCH_SF1000 = 1TB raw dataset.
+#
+# Assumes Snowflake account, username, password, warehouse
+# have all been separately specified in SnowSQL config file
+# at ~/.snowsql/config
 # 
 if [ "$#" -eq 0 ]; then     
 	echo "Usage: $0 <queryfile> <database> [schema] [outfile]"
@@ -10,8 +14,8 @@ if [ "$#" -eq 0 ]; then
 fi
 
 qfile=$1
-db=${2:-TPC}
-schema=${3:-TPCH_SF30000_CLUSTERED}
+db=${2:-SAMPLE_DATA}
+schema=${3:-TPCH_SF1000}
 outfile=${4:-${db:0:5}\_$schema\_${qfile:0:2}.out}
 
 exec >>$outfile
