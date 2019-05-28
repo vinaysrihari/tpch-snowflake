@@ -1,11 +1,14 @@
 #!/bin/bash
 #
-# Run all 22 TPC-H queries sequentially on a scaling-factor (SF) 
-# Default schema is tpch_sf1000 = 1TB. 
+# Run all 22 TPC-H queries sequentially against a TPCH database/schema.
+# Default schema is tpch_sf1000 = 1TB.
+#
+# Assumes Snowflake account, username/password, warehouse are separately
+# specified in snowsql configuration file: ~/.snowsql/config
 
 now=`date +%Y%m%d-%H%M%S`
 db=${1:-TPC}
-schema=${2:-TPCH_SF30000_CLUSTERED}
+schema=${2:-TPCH_SF1000}
 outfile=$schema\_${db:0:6}\_$now.out
 
 exec >$outfile
