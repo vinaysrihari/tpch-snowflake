@@ -1,0 +1,24 @@
+#!/bin/bash 
+# 
+# Run TPC-H query on different scaling-factor (SF) schemas 
+# Default DB is SNOWFLAKE_SAMPLE_DATA database. 
+# Default schema is tpch_sf1000 = 1GB. 
+# 
+if [ "$#" -eq 0 ]; then     
+	echo "Usage: $0 <queryfile> <database> [schema] [outfile]"
+        exit 1
+fi
+
+qfile=$1
+db=${2:-TPC}
+schema=${3:-TPCH_SF30000_CLUSTERED}
+outfile=${4:-${db:0:5}\_$schema\_${qfile:0:2}.out}
+
+exec >>$outfile
+exec 2>&1
+
+echo "== TPC-H Query${qfile:1:2} =="
+snowsql -d $db -s $schema -f $qfile -o friendly=False -o timing=True \
+-o execution_only=True -o output_format=csv -o header=False
+
+sync
