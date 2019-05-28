@@ -1,13 +1,13 @@
 #!/bin/bash
 #
 # Run all 22 TPC-H queries sequentially against a TPCH database/schema.
-# Default schema is tpch_sf1000 = 1TB.
+# Default schema is tpch_sf1000 = 1TB raw in the SAMPLE_DATA database.
 #
 # Assumes Snowflake account, username/password, warehouse are separately
 # specified in snowsql configuration file: ~/.snowsql/config
 
 now=`date +%Y%m%d-%H%M%S`
-db=${1:-TPC}
+db=${1:-SAMPLE_DATA}
 schema=${2:-TPCH_SF1000}
 outfile=$schema\_${db:0:6}\_$now.out
 
